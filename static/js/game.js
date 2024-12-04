@@ -5,7 +5,7 @@ let gravity, jumpForce;
 let gameOver = false;
 let score = 0;
 let nextObstacleTime = 0; // Время до появления следующего препятствия
-let highestScore = 0;
+//let highestScore = 0;
 let lastFrameTime = 0; // Время последнего кадра
 let gameSpeed = 1; // Начальная скорость игры (множитель)
 
