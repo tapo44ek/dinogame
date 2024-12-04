@@ -99,7 +99,7 @@ function updateObstacles(deltaTime) {
             if (score % 5 === 0) {
                 gameSpeed += 0.1; // Увеличиваем скорость на 10%
                 gravity = baseGravity * gameSpeed; // Увеличиваем гравитацию
-                jumpForce = baseJumpForce //* gameSpeed * 0.95; // Увеличиваем силу прыжка (в отрицательную сторону)
+                jumpForce = baseJumpForce * gameSpeed * 0.915; // Увеличиваем силу прыжка (в отрицательную сторону)
             }
         }
     });
