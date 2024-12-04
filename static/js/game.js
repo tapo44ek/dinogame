@@ -4,6 +4,7 @@ let frame = 0;
 let gravity = 1.2;
 let gameOver = false;
 let score = 0;
+let nextObstacleFrame = 0;
 //let highestScore = 0;
 
 function initGame() {
@@ -56,12 +57,37 @@ function updateDino() {
 }
 
 function updateObstacles() {
-    if (frame % 100 === 0) {
-        obstacles.push({ x: canvas.width, y: canvas.height - 50, width: 20, height: 50, passed: false });
+        // Проверка: если игра только началась, создаём первое препятствие
+    if (obstacles.length === 0 && frame === 0) {
+        obstacles.push({
+            x: canvas.width,
+            y: canvas.height - 50,
+            width: 20,
+            height: 50,
+            passed: false
+        });
+
+        // Устанавливаем интервал для следующего препятствия
+        nextObstacleFrame = frame + Math.floor(50 + Math.random() * 100);
     }
 
-    obstacles.forEach(obstacle => {
-        obstacle.x -= 4;
+    // Если текущий кадр достиг момента генерации следующего препятствия
+    if (frame >= nextObstacleFrame) {
+        obstacles.push({
+            x: canvas.width, // Начальная позиция справа за пределами экрана
+            y: canvas.height - 50, // Привязка к нижнему краю (50px высота препятствия)
+            width: 20,
+            height: 50,
+            passed: false
+        });
+
+        // Устанавливаем случайное расстояние до следующего препятствия
+        nextObstacleFrame = frame + Math.floor(50 + Math.random() * 100); // От 50 до 150 кадров
+    }
+
+    // Обновляем положение препятствий
+    obstacles.forEach((obstacle) => {
+        obstacle.x -= 4; // Двигаем препятствие влево
 
         if (!obstacle.passed && obstacle.x + obstacle.width < dino.x) {
             obstacle.passed = true;
