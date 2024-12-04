@@ -4,7 +4,7 @@ let gravity = 1200; // Гравитация в пикселях/сек^2
 let gameOver = false;
 let score = 0;
 let nextObstacleTime = 0; // Время для следующего препятствия в секундах
-let highestScore = 0;
+//let highestScore = 0;
 let lastFrameTime = 0; // Время предыдущего кадра
 
 function initGame() {
