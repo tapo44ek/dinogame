@@ -23,7 +23,7 @@ async def index(request: Request):
 
 @router.post("/start-game/")
 async def start_game(email: str = Form(...)):
-    return RedirectResponse(url=f"/game/?email={email}", status_code=303)
+    return RedirectResponse(url=f"dinogame/game/?email={email}", status_code=303)
 
 
 @router.get("/game/")
