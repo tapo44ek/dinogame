@@ -1,11 +1,11 @@
 let canvas, ctx, dino, obstacles, scoreCounterElement, highestScoreElement, playAgainButton;
 let i = 1;
-let frame = 0;
-let gravity = 1.2;
+let gravity = 1000; // Гравитация в пикселях/сек^2
 let gameOver = false;
 let score = 0;
-let nextObstacleFrame = 0;
+let nextObstacleTime = 0; // Время для следующего препятствия в секундах
 //let highestScore = 0;
+let lastFrameTime = 0; // Время предыдущего кадра
 
 function initGame() {
     canvas = document.getElementById("gameCanvas");
@@ -18,10 +18,8 @@ function initGame() {
     highestScoreElement = document.getElementById("highestScore");
     playAgainButton = document.getElementById("playAgainButton");
 
-    // Скрываем кнопку при старте игры
     playAgainButton.style.display = "none";
-    console.log("Кнопка скрыта при старте"); // Лог для проверки
-    playAgainButton.removeEventListener("click", restartGame); // Убираем предыдущий обработчик
+    playAgainButton.removeEventListener("click", restartGame);
 }
 
 function drawDino() {
@@ -43,10 +41,10 @@ function drawObstacles() {
     });
 }
 
-function updateDino() {
+function updateDino(deltaTime) {
     if (dino.jumping) {
-        dino.dy += gravity;
-        dino.y += dino.dy;
+        dino.dy += gravity * deltaTime; // Ускорение с учётом времени
+        dino.y += dino.dy * deltaTime; // Перемещение с учётом времени
 
         if (dino.y >= canvas.height - 50) {
             dino.y = canvas.height - 50;
@@ -56,9 +54,10 @@ function updateDino() {
     }
 }
 
-function updateObstacles() {
-        // Проверка: если игра только началась, создаём первое препятствие
-    if (obstacles.length === 0 && frame === 0) {
+function updateObstacles(deltaTime) {
+    // Генерация препятствий
+    nextObstacleTime -= deltaTime;
+    if (nextObstacleTime <= 0) {
         obstacles.push({
             x: canvas.width,
             y: canvas.height - 50,
@@ -66,35 +65,19 @@ function updateObstacles() {
             height: 50,
             passed: false
         });
-
-        // Устанавливаем интервал для следующего препятствия
-        nextObstacleFrame = frame + Math.floor(50 + Math.random() * 100);
+        nextObstacleTime = 1 + Math.random() * 1; // Новое препятствие через 1-2 секунды
     }
 
-    // Если текущий кадр достиг момента генерации следующего препятствия
-    if (frame >= nextObstacleFrame) {
-        obstacles.push({
-            x: canvas.width, // Начальная позиция справа за пределами экрана
-            y: canvas.height - 50, // Привязка к нижнему краю (50px высота препятствия)
-            width: 20,
-            height: 50,
-            passed: false
-        });
-
-        // Устанавливаем случайное расстояние до следующего препятствия
-        nextObstacleFrame = frame + Math.floor(50 + Math.random() * 100); // От 50 до 150 кадров
-    }
-
-    // Обновляем положение препятствий
+    // Движение препятствий
+    const speed = 200; // Скорость движения препятствий в пикселях/сек
     obstacles.forEach((obstacle) => {
-        obstacle.x -= 4; // Двигаем препятствие влево
+        obstacle.x -= speed * deltaTime;
 
         if (!obstacle.passed && obstacle.x + obstacle.width < dino.x) {
             obstacle.passed = true;
             score++;
             scoreCounterElement.textContent = score;
 
-            // Проверяем, побит ли рекорд
             if (score > highestScore) {
                 highestScore = score;
                 highestScoreElement.textContent = highestScore;
@@ -134,59 +117,53 @@ function saveScore() {
 
 function showPlayAgainButton() {
     playAgainButton.style.display = "block";
-    console.log("Кнопка 'Играть ещё раз' отображена"); // Лог для проверки
     playAgainButton.addEventListener("click", restartGame);
 }
 
 function jump() {
     if (!dino.jumping) {
         dino.jumping = true;
-        dino.dy = -22;
+        dino.dy = -500; // Начальная скорость прыжка в пикселях/сек
     }
 }
 
 function restartGame() {
-    console.log("Перезапуск игры"); // Лог для проверки
     score = 0;
     scoreCounterElement.textContent = score;
-    frame = 0;
     gameOver = false;
     startGame(email, highestScore);
 }
 
 function startGame(email, initialHighestScore) {
-    highestScore = initialHighestScore; // Устанавливаем начальный рекорд
+    highestScore = initialHighestScore;
     initGame();
-
-    highestScoreElement.textContent = highestScore; // Отображаем рекорд
+    highestScoreElement.textContent = highestScore;
 
     document.addEventListener("keydown", e => {
         if (e.code === "Space") jump();
     });
 
     document.addEventListener("touchstart", e => {
-        e.preventDefault(); // Предотвращаем ненужное поведение браузера (например, скроллинг)
+        e.preventDefault();
         jump();
     });
 
-//    canvas.addEventListener("touchstart", (e) => {
-//        e.preventDefault(); // Предотвращаем ненужное поведение браузера (например, скроллинг)
-//        jump();
-//    });
-
-    function gameLoop() {
+    function gameLoop(currentTime) {
         if (gameOver) return;
+
+        const deltaTime = (currentTime - lastFrameTime) / 1000; // Время между кадрами в секундах
+        lastFrameTime = currentTime;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawDino();
         drawObstacles();
-        updateDino();
-        updateObstacles();
+        updateDino(deltaTime);
+        updateObstacles(deltaTime);
         checkCollision();
 
-        frame++;
         requestAnimationFrame(gameLoop);
     }
 
-    gameLoop();
+    lastFrameTime = performance.now(); // Устанавливаем начальное время
+    gameLoop(lastFrameTime);
 }

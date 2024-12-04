@@ -1,17 +1,18 @@
 let canvas, ctx, dino, obstacles, scoreCounterElement, highestScoreElement, playAgainButton;
-let i = 1;
-let gravity = 1200; // Гравитация в пикселях/сек^2
+let gravity = 1000; // Гравитация в пикселях/сек^2
 let gameOver = false;
 let score = 0;
-let nextObstacleTime = 0; // Время для следующего препятствия в секундах
+let nextObstacleTime = 0; // Время до появления следующего препятствия
 //let highestScore = 0;
-let lastFrameTime = 0; // Время предыдущего кадра
+let lastFrameTime = 0; // Время последнего кадра
+let gameSpeed = 1; // Начальная скорость игры (множитель)
 
 function initGame() {
     canvas = document.getElementById("gameCanvas");
     canvas.width = window.innerWidth * 0.9;
     canvas.height = window.innerHeight * 0.4;
     ctx = canvas.getContext("2d");
+
     dino = { x: 50, y: canvas.height - 50, width: 50, height: 50, dy: 0, jumping: false };
     obstacles = [];
     scoreCounterElement = document.getElementById("scoreCounter");
@@ -20,6 +21,7 @@ function initGame() {
 
     playAgainButton.style.display = "none";
     playAgainButton.removeEventListener("click", restartGame);
+    gameSpeed = 1; // Сбрасываем скорость игры при рестарте
 }
 
 function drawDino() {
@@ -28,8 +30,8 @@ function drawDino() {
     dinoImage.src = "/dinogame/static/imgs/dino1.png";
     dinoImage1.src = "/dinogame/static/imgs/dino2.png";
 
-    ctx.drawImage(i < 10 ? dinoImage : dinoImage1, dino.x, dino.y, dino.width, dino.height);
-    i = (i + 1) % 20;
+    const image = performance.now() % 400 < 200 ? dinoImage : dinoImage1;
+    ctx.drawImage(image, dino.x, dino.y, dino.width, dino.height);
 }
 
 function drawObstacles() {
@@ -43,8 +45,8 @@ function drawObstacles() {
 
 function updateDino(deltaTime) {
     if (dino.jumping) {
-        dino.dy += gravity * deltaTime; // Ускорение с учётом времени
-        dino.y += dino.dy * deltaTime; // Перемещение с учётом времени
+        dino.dy += gravity * deltaTime; // Ускорение
+        dino.y += dino.dy * deltaTime; // Перемещение
 
         if (dino.y >= canvas.height - 50) {
             dino.y = canvas.height - 50;
@@ -55,9 +57,14 @@ function updateDino(deltaTime) {
 }
 
 function updateObstacles(deltaTime) {
-    // Генерация препятствий
+    const baseSpeed = 200; // Базовая скорость препятствий в пикселях/сек
+    const obstacleSpeed = baseSpeed * gameSpeed; // Ускоренная скорость
+
+    // Уменьшаем таймер до следующего препятствия
     nextObstacleTime -= deltaTime;
+
     if (nextObstacleTime <= 0) {
+        // Создаём новое препятствие
         obstacles.push({
             x: canvas.width,
             y: canvas.height - 50,
@@ -65,13 +72,12 @@ function updateObstacles(deltaTime) {
             height: 50,
             passed: false
         });
-        nextObstacleTime = 1 + Math.random() * 1; // Новое препятствие через 1-2 секунды
+
+        nextObstacleTime = (1 + Math.random()) / gameSpeed; // Устанавливаем время до следующего препятствия
     }
 
-    // Движение препятствий
-    const speed = 200; // Скорость движения препятствий в пикселях/сек
-    obstacles.forEach((obstacle) => {
-        obstacle.x -= speed * deltaTime;
+    obstacles.forEach(obstacle => {
+        obstacle.x -= obstacleSpeed * deltaTime;
 
         if (!obstacle.passed && obstacle.x + obstacle.width < dino.x) {
             obstacle.passed = true;
@@ -81,6 +87,11 @@ function updateObstacles(deltaTime) {
             if (score > highestScore) {
                 highestScore = score;
                 highestScoreElement.textContent = highestScore;
+            }
+
+            // Увеличиваем скорость игры при наборе каждого 5-го очка
+            if (score % 5 === 0) {
+                gameSpeed += 0.1; // Увеличиваем скорость на 10%
             }
         }
     });
@@ -123,7 +134,7 @@ function showPlayAgainButton() {
 function jump() {
     if (!dino.jumping) {
         dino.jumping = true;
-        dino.dy = -500; // Начальная скорость прыжка в пикселях/сек
+        dino.dy = -400; // Начальная скорость прыжка в пикселях/сек
     }
 }
 
@@ -164,6 +175,6 @@ function startGame(email, initialHighestScore) {
         requestAnimationFrame(gameLoop);
     }
 
-    lastFrameTime = performance.now(); // Устанавливаем начальное время
+    lastFrameTime = performance.now();
     gameLoop(lastFrameTime);
 }
