@@ -122,7 +122,7 @@ function checkCollision() {
 }
 
 function saveScore() {
-    fetch("/save-score/", {
+    fetch("/dinogame/save-score/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `email=${encodeURIComponent(email)}&points=${score}`,
