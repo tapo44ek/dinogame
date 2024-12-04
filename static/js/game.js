@@ -1,5 +1,5 @@
 let canvas, ctx, dino, obstacles, scoreCounterElement, highestScoreElement, playAgainButton;
-let baseGravity = 1300; // Базовая гравитация
+let baseGravity = 1350; // Базовая гравитация
 let baseJumpForce = -500; // Базовая начальная скорость прыжка
 let gravity, jumpForce;
 let gameOver = false;
@@ -99,7 +99,7 @@ function updateObstacles(deltaTime) {
             if (score % 5 === 0) {
                 gameSpeed += 0.1; // Увеличиваем скорость на 10%
                 gravity = baseGravity * gameSpeed; // Увеличиваем гравитацию
-                jumpForce = baseJumpForce * gameSpeed; // Увеличиваем силу прыжка (в отрицательную сторону)
+                jumpForce = baseJumpForce * gameSpeed * 0.95; // Увеличиваем силу прыжка (в отрицательную сторону)
             }
         }
     });
