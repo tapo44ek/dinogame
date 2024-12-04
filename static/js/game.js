@@ -136,6 +136,10 @@ function startGame(email, initialHighestScore) {
         if (e.code === "Space") jump();
     });
 
+    document.addEventListener("touchstart", e => {
+        if (e.code === "Space") jump();
+    });
+
     function gameLoop() {
         if (gameOver) return;
 
