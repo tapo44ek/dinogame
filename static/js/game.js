@@ -36,7 +36,7 @@ function drawDino() {
 
 function drawObstacles() {
     const cactusImage = new Image();
-    cactusImage.src = "/static/imgs/cactus1.png";
+    cactusImage.src = "/dinogame/static/imgs/cactus1.png";
 
     obstacles.forEach(obstacle => {
         ctx.drawImage(cactusImage, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
