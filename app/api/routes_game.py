@@ -31,7 +31,7 @@ async def start_game(email: str = Form(...)):
     if not re.match(pattern, email):
         # Возвращаем JSON-ответ с ошибкой
         return JSONResponse(
-            content={"detail": "Email должен быть зарегистрирован на домене 2mos.ru"},
+            content={"detail": "Введите почту @mos.ru"},
             status_code=400,
         )
 
