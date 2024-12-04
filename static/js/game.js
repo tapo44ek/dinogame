@@ -1,9 +1,11 @@
 let canvas, ctx, dino, obstacles, scoreCounterElement, highestScoreElement, playAgainButton;
-let gravity = 1000; // Гравитация в пикселях/сек^2
+let baseGravity = 1300; // Базовая гравитация
+let baseJumpForce = -500; // Базовая начальная скорость прыжка
+let gravity, jumpForce;
 let gameOver = false;
 let score = 0;
 let nextObstacleTime = 0; // Время до появления следующего препятствия
-//let highestScore = 0;
+let highestScore = 0;
 let lastFrameTime = 0; // Время последнего кадра
 let gameSpeed = 1; // Начальная скорость игры (множитель)
 
@@ -21,7 +23,11 @@ function initGame() {
 
     playAgainButton.style.display = "none";
     playAgainButton.removeEventListener("click", restartGame);
-    gameSpeed = 1; // Сбрасываем скорость игры при рестарте
+
+    // Устанавливаем начальные значения
+    gravity = baseGravity;
+    jumpForce = baseJumpForce;
+    gameSpeed = 1;
 }
 
 function drawDino() {
@@ -45,12 +51,12 @@ function drawObstacles() {
 
 function updateDino(deltaTime) {
     if (dino.jumping) {
-        dino.dy += gravity * deltaTime; // Ускорение
-        dino.y += dino.dy * deltaTime; // Перемещение
+        dino.dy += gravity * deltaTime; // Ускорение вниз под действием гравитации
+        dino.y += dino.dy * deltaTime; // Обновляем положение динозавра
 
-        if (dino.y >= canvas.height - 50) {
+        if (dino.y >= canvas.height - 50) { // Если динозавр касается земли
             dino.y = canvas.height - 50;
-            dino.jumping = false;
+            dino.jumping = false; // Завершаем прыжок
             dino.dy = 0;
         }
     }
@@ -92,6 +98,8 @@ function updateObstacles(deltaTime) {
             // Увеличиваем скорость игры при наборе каждого 5-го очка
             if (score % 5 === 0) {
                 gameSpeed += 0.1; // Увеличиваем скорость на 10%
+                gravity = baseGravity * gameSpeed; // Увеличиваем гравитацию
+                jumpForce = baseJumpForce * gameSpeed; // Увеличиваем силу прыжка (в отрицательную сторону)
             }
         }
     });
@@ -102,10 +110,10 @@ function updateObstacles(deltaTime) {
 function checkCollision() {
     obstacles.forEach(obstacle => {
         if (
-            dino.x < obstacle.x + obstacle.width &&
-            dino.x + dino.width > obstacle.x &&
-            dino.y < obstacle.y + obstacle.height &&
-            dino.y + dino.height > obstacle.y
+            dino.x*0.9 < obstacle.x + obstacle.width &&
+            dino.x*0.9 + dino.width > obstacle.x &&
+            dino.y*0.9 < obstacle.y + obstacle.height &&
+            dino.y*0.9 + dino.height > obstacle.y
         ) {
             gameOver = true;
             saveScore();
@@ -134,7 +142,7 @@ function showPlayAgainButton() {
 function jump() {
     if (!dino.jumping) {
         dino.jumping = true;
-        dino.dy = -600; // Начальная скорость прыжка в пикселях/сек
+        dino.dy = jumpForce; // Используем увеличенную начальную силу прыжка
     }
 }
 
