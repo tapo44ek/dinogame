@@ -9,9 +9,9 @@
 <body>
     {% include "header.html" %}
     <h1>Динозаврик JS</h1>
-    <p>Ваш текущий рекорд: <strong id="maxHighestScore">{{ max_highest_score }}</strong></p>
+    <p>Абсолютный рекорд в игре: <strong id="maxHighestScore">{{ max_highest_score }}</strong></p>
     <p>Ваш текущий рекорд: <strong id="highestScore">{{ highest_score }}</strong></p>
-    <p>Перепрыгнутые препятствия: <span id="scoreCounter">0</span></p>
+    <p>Очки: <span id="scoreCounter">0</span></p>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     <button id="playAgainButton">Играть ещё раз</button>
     <script src="/dinogame/static/js/game.js"></script>
