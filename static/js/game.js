@@ -139,8 +139,14 @@ function startGame(email, initialHighestScore) {
     });
 
     document.addEventListener("touchstart", e => {
-        if (e.code === "Space") jump();
+        e.preventDefault(); // Предотвращаем ненужное поведение браузера (например, скроллинг)
+        jump();
     });
+
+//    canvas.addEventListener("touchstart", (e) => {
+//        e.preventDefault(); // Предотвращаем ненужное поведение браузера (например, скроллинг)
+//        jump();
+//    });
 
     function gameLoop() {
         if (gameOver) return;
