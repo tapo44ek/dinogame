@@ -1,3 +1,5 @@
+import re
+from fastapi import Form, HTTPException
 from fastapi import APIRouter, Form, Request
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -23,6 +25,10 @@ async def index(request: Request):
 
 @router.post("/start-game/")
 async def start_game(email: str = Form(...)):
+    pattern = r"^[a-zA-Z0-9._%+-]+@mos\.ru$"
+    if not re.match(pattern, email):
+        raise HTTPException(status_code=400, detail="Email должен быть зарегистрирован на домене 2mos.ru")
+
     return RedirectResponse(url=f"/dinogame/game/?email={email}", status_code=303)
 
 
