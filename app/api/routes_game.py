@@ -1,4 +1,5 @@
 import re
+from fastapi.responses import HTMLResponse
 from fastapi import Form, HTTPException
 from fastapi import APIRouter, Form, Request
 from fastapi.responses import RedirectResponse
@@ -27,7 +28,19 @@ async def index(request: Request):
 async def start_game(email: str = Form(...)):
     pattern = r"^[a-zA-Z0-9._%+-]+@mos\.ru$"
     if not re.match(pattern, email):
-        raise HTTPException(status_code=400, detail="Email должен быть зарегистрирован на домене 2mos.ru")
+        return HTMLResponse(content="""
+                    <!DOCTYPE html>
+                    <html>
+                    <body>
+                        <p style="color: red;">Email должен быть зарегистрирован на домене 2mos.ru</p>
+                        <form action="/dinogame/start-game/" method="post">
+                            <label for="email">Введите вашу почту:</label>
+                            <input type="email" id="email" name="email" required>
+                            <button type="submit">Начать игру</button>
+                        </form>
+                    </body>
+                    </html>
+                """, status_code=400)
 
     return RedirectResponse(url=f"/dinogame/game/?email={email}", status_code=303)
 
