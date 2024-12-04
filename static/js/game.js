@@ -27,8 +27,8 @@ function initGame() {
 function drawDino() {
     const dinoImage = new Image();
     const dinoImage1 = new Image();
-    dinoImage.src = "/static/imgs/dino1.png";
-    dinoImage1.src = "/static/imgs/dino2.png";
+    dinoImage.src = "/dinogame/static/imgs/dino1.png";
+    dinoImage1.src = "/dinogame/static/imgs/dino2.png";
 
     ctx.drawImage(i < 10 ? dinoImage : dinoImage1, dino.x, dino.y, dino.width, dino.height);
     i = (i + 1) % 20;
