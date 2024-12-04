@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рейтинги</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {% include "header.html" %}
+    <h1>Рейтинги игроков</h1>
+    <main>
+    <table>
+        <thead>
+            <tr>
+                <th>Место</th>
+                <th>Email</th>
+                <th>Очки</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for idx, score in enumerate(scores) %}
+            <tr>
+                <td>{{ idx + 1 }}</td>
+                <td>{{ score.email }}</td>
+                <td>{{ score.points }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        </main>
+    {% include "footer.html" %}
+</body>
+</html>

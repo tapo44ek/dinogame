@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Динозаврик JS</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {% include "header.html" %}
+    <h1>Динозаврик JS</h1>
+    <p>Ваш текущий рекорд: <strong id="maxHighestScore">{{ max_highest_score }}</strong></p>
+    <p>Ваш текущий рекорд: <strong id="highestScore">{{ highest_score }}</strong></p>
+    <p>Перепрыгнутые препятствия: <span id="scoreCounter">0</span></p>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <button id="playAgainButton">Играть ещё раз</button>
+    <script src="/static/js/game.js"></script>
+    <script>
+        const email = "{{ email }}";
+        let highestScore = {{ highest_score }};
+        startGame(email, highestScore);
+    </script>
+
+    {% include "footer.html" %}
+</body>
+</html>
