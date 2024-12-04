@@ -8,8 +8,10 @@ let score = 0;
 
 function initGame() {
     canvas = document.getElementById("gameCanvas");
+    canvas.width = window.innerWidth * 0.9;
+    canvas.height = window.innerHeight * 0.4;
     ctx = canvas.getContext("2d");
-    dino = { x: 50, y: 350, width: 50, height: 50, dy: 0, jumping: false };
+    dino = { x: 50, y: canvas.height - 50, width: 50, height: 50, dy: 0, jumping: false };
     obstacles = [];
     scoreCounterElement = document.getElementById("scoreCounter");
     highestScoreElement = document.getElementById("highestScore");
@@ -45,8 +47,8 @@ function updateDino() {
         dino.dy += gravity;
         dino.y += dino.dy;
 
-        if (dino.y >= 350) {
-            dino.y = 350;
+        if (dino.y >= canvas.height - 50) {
+            dino.y = canvas.height - 50;
             dino.jumping = false;
             dino.dy = 0;
         }
@@ -55,7 +57,7 @@ function updateDino() {
 
 function updateObstacles() {
     if (frame % 100 === 0) {
-        obstacles.push({ x: canvas.width, y: 350, width: 20, height: 50, passed: false });
+        obstacles.push({ x: canvas.width, y: canvas.height - 50, width: 20, height: 50, passed: false });
     }
 
     obstacles.forEach(obstacle => {
