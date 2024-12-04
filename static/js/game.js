@@ -7,7 +7,8 @@ let score = 0;
 let nextObstacleTime = 0; // Время до появления следующего препятствия
 //let highestScore = 0;
 let lastFrameTime = 0; // Время последнего кадра
-let gameSpeed = 1; // Начальная скорость игры (множитель)
+let gameSpeed = 1;
+let jumpSpeed = 1;// Начальная скорость игры (множитель)
 
 function initGame() {
     canvas = document.getElementById("gameCanvas");
@@ -98,8 +99,9 @@ function updateObstacles(deltaTime) {
             // Увеличиваем скорость игры при наборе каждого 5-го очка
             if (score % 5 === 0) {
                 gameSpeed += 0.1; // Увеличиваем скорость на 10%
+                jumpSpeed += 0.02;
                 gravity = baseGravity * gameSpeed; // Увеличиваем гравитацию
-                jumpForce = baseJumpForce * gameSpeed * 0.915; // Увеличиваем силу прыжка (в отрицательную сторону)
+                jumpForce = baseJumpForce * jumpSpeed; // Увеличиваем силу прыжка (в отрицательную сторону)
             }
         }
     });
