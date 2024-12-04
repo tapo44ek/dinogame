@@ -134,7 +134,7 @@ function showPlayAgainButton() {
 function jump() {
     if (!dino.jumping) {
         dino.jumping = true;
-        dino.dy = -400; // Начальная скорость прыжка в пикселях/сек
+        dino.dy = -600; // Начальная скорость прыжка в пикселях/сек
     }
 }
 
