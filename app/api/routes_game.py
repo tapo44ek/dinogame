@@ -27,6 +27,7 @@ async def index(request: Request):
 
 @router.post("/start-game/")
 async def start_game(email: str = Form(...)):
+    email = email.lower()
     pattern = r"^[a-zA-Z0-9._%+-]+@mos\.ru$"
     if not re.match(pattern, email):
         # Возвращаем JSON-ответ с ошибкой
