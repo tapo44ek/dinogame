@@ -103,17 +103,18 @@
     <div class="container">
         <h2 class="description">Поздравляем! Вы доказали, что здоровое любопытство вам не чуждо.</h2>
         <h1>Добро пожаловать в игру "Динозаврик"</h1>
+             <form id="startGameForm" action="/dinogame/start-game/" method="post">
+        <label for="email">Введите вашу почту mos.ru:</label>
+        <input type="email" id="email" name="email" required>
+        <button type="submit">Начать игру</button>
+    </form>
         <p class="instructions">
             Мы предлагаем вам сыграть в игру "Динозаврик". Вам нужно прыгать через новогодние елки и набирать очки. <br>
             Если вы играете с телефона, для прыжков нажимайте на экран, если с компьютера - нажимайте на пробел. <br>
             На форуме информационных технологий будут подведены итоги конкурса между игроками <br>
             Для победы в конкурсе набирайте очки и следите за табицей лидеров. Удачи!
         </p>
-     <form id="startGameForm" action="/dinogame/start-game/" method="post">
-        <label for="email">Введите вашу почту mos.ru:</label>
-        <input type="email" id="email" name="email" required>
-        <button type="submit">Начать игру</button>
-    </form>
+
 
     <script>
     const form = document.getElementById("startGameForm");
