@@ -252,6 +252,7 @@ main {
 table {
     width: 80%; /* Таблица занимает 80% ширины экрана */
     margin: 20px auto; /* Центрируем таблицу */
+    margin-bottom: 20px;
     border-collapse: collapse; /* Убираем двойные границы */
     background-color: #fff; /* Белый фон таблицы */
     font-family: Arial, sans-serif;
