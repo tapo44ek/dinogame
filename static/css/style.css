@@ -165,70 +165,68 @@ header {
 
 
 
-/* Общий стиль для футера */
+/* Основной стиль футера */
 footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 15px; /* Добавлены отступы для удобства чтения */
-    text-align: center;
-    font-size: 0.9rem;
-    width: 100%;
-    position: relative;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #333; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    padding: 20px 10px; /* Внутренние отступы */
+    text-align: center; /* Центрирование текста */
+    font-size: 1rem; /* Основной размер текста */
+    width: 100%; /* Ширина футера */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Тень для отделения от контента */
 }
 
-/* Контейнер для элементов футера */
-.footer-content {
-    display: flex;
-    flex-direction: column; /* Элементы друг под другом */
-    align-items: center;
-    justify-content: center;
-    gap: 10px; /* Расстояние между текстом и кнопкой */
-    max-width: 800px; /* Ограничение ширины футера для больших экранов */
-    margin: 0 auto; /* Центрирование на больших экранах */
+/* Контейнер для текста и ссылки */
+.footer-container {
+    display: flex; /* Включаем флекс */
+    flex-direction: column; /* Элементы располагаются в колонку */
+    align-items: center; /* Центрирование по горизонтали */
+    gap: 15px; /* Интервал между строками */
+    max-width: 800px; /* Ограничиваем ширину для больших экранов */
+    margin: 0 auto; /* Центрирование контейнера */
 }
 
 /* Текст в футере */
 .footer-text {
-    font-size: 1rem; /* Читаемый шрифт */
-    line-height: 1.5; /* Увеличиваем межстрочный интервал */
-    margin: 0;
-    text-align: center;
+    font-size: 1rem; /* Размер текста */
+    line-height: 1.5; /* Межстрочный интервал */
+    text-align: center; /* Центрирование текста */
+    margin: 0; /* Убираем внешние отступы */
+    word-wrap: break-word; /* Перенос слов при узких экранах */
 }
 
-/* Кнопка-ссылка */
-.footer-button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #4caf50;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+/* Кнопка-ссылка в футере */
+.footer-link {
+    display: inline-block; /* Делаем ссылку блочной */
+    padding: 10px 20px; /* Внутренние отступы */
+    font-size: 1rem; /* Размер текста */
+    color: #fff; /* Цвет текста */
+    background-color: #4caf50; /* Цвет кнопки */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 5px; /* Скругляем углы */
+    transition: background-color 0.3s, color 0.3s; /* Анимация при наведении */
 }
 
-.footer-button:hover {
-    background-color: #45a049;
-    color: #fff;
+.footer-link:hover {
+    background-color: #45a049; /* Цвет при наведении */
+    color: #fff; /* Сохраняем белый текст */
 }
 
 /* Адаптация для мобильных устройств */
 @media (max-width: 768px) {
-    .footer-content {
-        gap: 15px; /* Увеличиваем расстояние между строками */
-        padding: 10px; /* Дополнительный отступ */
+    .footer-container {
+        gap: 10px; /* Уменьшаем расстояние между элементами */
+        padding: 10px; /* Увеличиваем внутренние отступы для комфорта */
     }
 
     .footer-text {
-        font-size: 0.85rem; /* Уменьшение текста для мобильных */
-        line-height: 1.4;
+        font-size: 0.9rem; /* Уменьшаем текст для узких экранов */
     }
 
-    .footer-button {
-        width: 100%; /* Кнопка занимает всю ширину экрана */
-        max-width: 300px; /* Ограничение ширины кнопки */
-        text-align: center;
+    .footer-link {
+        width: 90%; /* Растягиваем кнопку на всю ширину */
+        max-width: 300px; /* Ограничиваем ширину на больших экранах */
+        text-align: center; /* Центрирование текста внутри кнопки */
     }
 }
 
