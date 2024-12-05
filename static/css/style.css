@@ -10,6 +10,18 @@ h1, h2, p {
     text-align: center;
 }
 
+h2 {
+    margin-top: 10px; /* Уменьшаем отступ сверху */
+    margin-bottom: 15px; /* Небольшой отступ снизу */
+}
+
+h2.description {
+    margin-top: 5px; /* Минимальный отступ для заголовка "Поздравляем" */
+    font-size: 1.5rem; /* Сохраняем читаемость текста */
+    color: #16a085; /* Сохраняем цвет */
+    text-align: center; /* Центрируем текст */
+}
+
 form {
     display: flex;
     flex-direction: column;
