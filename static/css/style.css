@@ -165,67 +165,68 @@ header {
 
 
 
+/* Стиль для футера */
 footer {
     background-color: #333;
     color: #fff;
-    padding: 10px 20px;
-    position: fixed;
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    position: relative;
     bottom: 0;
     width: 100%;
-    display: flex;
-    align-items: center; /* Центрируем элементы по вертикали */
-    justify-content: space-between; /* Размещаем текст и ссылку по краям */
-    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
-    flex-wrap: nowrap; /* Предотвращаем перенос при достаточном месте */
-    gap: 5px; /* Добавляем промежуток между элементами */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
-footer .footer-content {
+/* Контейнер для элементов футера */
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    flex: 1; /* Растягиваем контейнер на всю ширину */
+    flex-direction: column; /* Ставит элементы друг под другом */
     align-items: center;
-    justify-content: space-between; /* Распределяем текст и ссылку */
-    gap: 5px;
+    gap: 10px; /* Расстояние между строками */
 }
 
-footer p {
+/* Текст футера */
+.footer-text {
     margin: 0;
-    font-size: 0.9rem;
-    text-align: left; /* Текст выравнивается по левому краю */
-    flex: 1; /* Позволяет тексту занимать всё доступное пространство */
+    font-size: 1rem;
+    line-height: 1.4;
+    text-align: center;
+    word-wrap: break-word; /* Перенос слов для мобильных устройств */
 }
 
-footer .developer-link {
+/* Кнопка-ссылка */
+.footer-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
     color: #fff;
+    background-color: #4caf50;
     text-decoration: none;
-    font-size: 0.9rem;
-    background-color: #555;
-    padding: 5px 10px;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
-    white-space: nowrap; /* Предотвращаем перенос текста */
 }
 
-footer .developer-link:hover {
-    background-color: #ffa500;
-    color: black;
+.footer-button:hover {
+    background-color: #45a049;
+    color: #fff;
 }
 
-/* Адаптация для узких экранов */
-@media (max-width: 600px) {
-    footer {
-        flex-wrap: wrap; /* Элементы начинают переноситься на новую строку */
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .footer-content {
+        gap: 15px; /* Увеличиваем расстояние между строками */
     }
 
-    footer p {
-        text-align: center; /* Центрируем текст */
-        flex: none; /* Убираем растяжение текста */
-        margin-bottom: 10px; /* Добавляем отступ снизу */
+    .footer-text {
+        font-size: 0.9rem; /* Уменьшаем текст для мобильных */
     }
 
-    footer .developer-link {
-        margin-left: auto;
-        margin-right: auto; /* Центрируем ссылку */
+    .footer-button {
+        width: 90%; /* Занимает почти всю ширину на маленьких экранах */
+        text-align: center;
     }
 }
 

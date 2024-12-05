@@ -29,6 +29,7 @@ function initGame() {
     gravity = baseGravity;
     jumpForce = baseJumpForce;
     gameSpeed = 1;
+    jumpSpeed = 1;
 }
 
 function drawDino() {
@@ -119,7 +120,7 @@ function checkCollision() {
         ) {
             gameOver = true;
             saveScore();
-            alert(`Игра окончена! Ваш результат: ${score}`);
+//            alert(`Игра окончена! Ваш результат: ${score}`);
             showPlayAgainButton();
         }
     });
