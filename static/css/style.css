@@ -104,7 +104,7 @@ header .nav-link:hover {
 }
 
 body {
-    padding-top: 60px; /* Чтобы контент не перекрывался хедером */
+    padding-top: 20px; /* Чтобы контент не перекрывался хедером */
 }
 
 #playAgainButton {
