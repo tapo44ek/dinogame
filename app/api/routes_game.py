@@ -41,6 +41,7 @@ async def start_game(email: str = Form(...)):
 
 @router.get("/game/")
 async def game(email: str, request: Request, db: Session = Depends(get_db)):
+    email = email.lower()
     # Получить текущий рекорд для данного email
     record = db.query(Score).filter(Score.email == email).first()
     max_score = db.query(func.max(Score.points)).scalar()
